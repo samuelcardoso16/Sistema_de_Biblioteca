@@ -65,3 +65,22 @@ livro1 = ("Star Wars: A Vingança dos Sith (Episódio III) – Edição de luxo"
 livro2 = ("Star Wars: The Mandalorian – Como deve ser", "Christopher Nicholas",2026 ,32,"Uni Jr","Literatura infantil e Infantojuvenil")
 livro3 = ("A Metamorfose","Franz Kafka",1915,96,"Editora Principis","Novela, Ficção fantástica e Ficção do absurdo")
 livro4 = ("O Senhor dos Anéis: A Sociedade do Anel","J. R. R. Tolkien",1954 ,434,"HarperCollins Brasil,""Fantasia épica e Romance de Aventura")
+class Administrador(Pessoa):
+    def __init__(
+        self,
+        nome,
+        idade,
+        telefone,
+        email,
+        matricula
+    ):
+        super().__init__(
+            nome,
+            idade,
+            telefone,
+            email
+        )
+        self.matricula = matricula
+
+# Cadastro do administrador
+administrador = Administrador("Alan Silva De Oliveira",30,"(77) 99999-0000","alansilvadeoliveira169@gmail.com","ADM123")
