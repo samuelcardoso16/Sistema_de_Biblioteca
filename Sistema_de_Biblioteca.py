@@ -33,7 +33,6 @@ class Leitor(Pessoa):
             print(f" Autor: {livro['autor']}")
             print(f" Status: {livro['status']}")
 
-Leitor1 = ("Manuel Silva de Oliveira", "48", "55 77 99106-9024", "manuelsilvadeoliveira169@gmail.com")
 
 class Livro:
     def __init__(self,titulo,autor,ano_publicacao,numero_paginas,editora,genero):
@@ -65,7 +64,6 @@ class Administrador(Pessoa):
         super().__init__( nome,idade,telefone, email)
         self.matricula = matricula
 
-administrador = Administrador("Alan Silva De Oliveira",30,"(77) 99999-0000","alansilvadeoliveira169@gmail.com","ADM123")
 
 class Biblioteca: 
     def __init__(self):
@@ -113,12 +111,31 @@ class Biblioteca:
             print("Livro não encontrado.")
             return
         if not livro.disponivel:
-            print("Não é possivrl remover o livro emprestado.")
+            print("Não é possivel remover o livro emprestado.")
             return
         livro.disponivel=False
 
         print("Emprestimo realizado com sucesso")
-        Leitor.historico.append({"Título": livro.titulo, "autor": livro.autor, "status": "Emprestado" })
+
+    def emprestar_livro(self,nome_leitor,titulo):
+
+        leitor=self.buscar_leitor(nome_leitor)
+
+        if leitor is None:
+            print("Leitor não encontrado")
+            return
+        livro=self.buscar_livro(titulo)
+        if livro is None:
+            print("Livro não encontrado")
+            return
+        if not livro.disponivel:
+            print("Esse livro já está emprestado")
+            return
+
+        livro.disponivel=False
+        leitor.historico.append({"Titulo": livro.titulo, "Autor": livro.autor, "Status": "Emprestado"})
+        print("\nEmprestima realizado com sucesso!")
+
 
     def devolver_livro(self,titulo):
         livro= self.buscar_livro(titulo)
@@ -190,4 +207,11 @@ class Biblioteca:
             print(f"Livros emprestados: {livros_emprestados}")
             print(f"Total de leitores: {total_leitores}")
 
-        
+
+Leitor1 = ("Manuel Silva de Oliveira", "48", "55 77 99106-9024", "manuelsilvadeoliveira169@gmail.com")
+administrador = Administrador("Alan Silva De Oliveira",30,"(77) 99999-0000","alansilvadeoliveira169@gmail.com","ADM123")
+
+livro1 = ("Star Wars: A Vingança dos Sith (Episódio III) – Edição de luxo", "MATTHEW STOVER", 2025, 400, "Universo Geek","Ficção científica")
+livro2 = ("Star Wars: The Mandalorian – Como deve ser", "Christopher Nicholas",2026 ,32,"Uni Jr","Literatura infantil e Infantojuvenil")
+livro3 = ("A Metamorfose","Franz Kafka",1915,96,"Editora Principis","Novela, Ficção fantástica e Ficção do absurdo")
+livro4 = ("O Senhor dos Anéis: A Sociedade do Anel","J. R. R. Tolkien",1954 ,434,"HarperCollins Brasil,""Fantasia épica e Romance de Aventura")
