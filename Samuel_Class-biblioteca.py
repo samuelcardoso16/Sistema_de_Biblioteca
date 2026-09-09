@@ -35,3 +35,15 @@ class Biblioteca:
             if titulo.lower()in livro.titulo.lower():
                 encontrados.append(livro)
         return encontrados 
+
+    def remover_livro (self):
+        livro= self.buscar_livro(titulo)
+        if livro is None:
+            print("Livro não encontrado.")
+            return
+        if not livro.disponivel:
+            print("Não é possivrl remover o livro emprestado.")
+            return
+        livro.disponivel=False
+
+        leitor.historico.append({"Título": livro.titulo , "autor: "livro.autor, "status: " "Emprestado" })
