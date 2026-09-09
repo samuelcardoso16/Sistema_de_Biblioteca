@@ -46,4 +46,24 @@ class Biblioteca:
             return
         livro.disponivel=False
 
-        leitor.historico.append({"Título": livro.titulo , "autor: "livro.autor, "status: " "Emprestado" })
+        leitor.historico.append({"Título": livro.titulo "autor: " livro.autor, "status: " "Emprestado" })
+        print("Emprestimo realizado com sucesso")
+
+    def devolver_livro(self,titulo):
+        livro= self.buscar_livro(titulo)
+        if livro is None: 
+            print("Livro não encontrado")
+            return
+        if livro.disponivel:
+            print("Esse livro já esta disponivel")
+            return
+        livro.disponivel=True 
+
+        for leitor in self.leitores:
+            for registro in leitor.historico:
+                if (registro["Título"].lower()== livro.titulo.lower()and registro["status"]=="Emprestado"):
+                    registro["status"] = "Devolvido"
+        print("Livro devolvido com sucesso!")
+
+        
+        
