@@ -21,7 +21,9 @@ class Biblioteca:
             return None
 
     def consultar_acervo (self):
-        print("          Acervo   ")       
+        print("\n================================")
+        print("              Acervo              ")
+        print("==================================")       
 
         if len(self.livros)==0:
             print(" Nenhum livro cadastrado. ")
@@ -74,7 +76,10 @@ class Biblioteca:
                 print("Não é possivel alterar um livro emprestado.") 
                 return
 
-            print("ALTERAÇÃO DO LIVRO")    
+            print("\n================================")
+            print("        ALTERAÇÃO DO LIVRO        ") 
+            print("==================================")  
+
             print("Deixe vazio para manter a informção atual. ")  
             novo_titulo= input(f"Informe o novo titulo: {livro.titulo}")
             novo_autor= input(f"Informe o novo autor: {livro.autor}")
