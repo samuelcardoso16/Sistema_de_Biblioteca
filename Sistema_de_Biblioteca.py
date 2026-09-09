@@ -59,12 +59,6 @@ class Livro:
         else:
             print("Status: Emprestado")
 
-        print("------------------------------")
-
-livro1 = ("Star Wars: A Vingança dos Sith (Episódio III) – Edição de luxo", "MATTHEW STOVER", 2025, 400, "Universo Geek","Ficção científica")
-livro2 = ("Star Wars: The Mandalorian – Como deve ser", "Christopher Nicholas",2026 ,32,"Uni Jr","Literatura infantil e Infantojuvenil")
-livro3 = ("A Metamorfose","Franz Kafka",1915,96,"Editora Principis","Novela, Ficção fantástica e Ficção do absurdo")
-livro4 = ("O Senhor dos Anéis: A Sociedade do Anel","J. R. R. Tolkien",1954 ,434,"HarperCollins Brasil,""Fantasia épica e Romance de Aventura")
 
 class Administrador(Pessoa):
     def __init__(
@@ -112,10 +106,10 @@ class Biblioteca:
         print("              Acervo              ")
         print("==================================")       
 
-        if len(self.livros)==0:
+        if len(self.livros) == 0:
             print(" Nenhum livro cadastrado. ")
             return
-        if livro in self.livros:
+        for livro in self.livros:
             livro.mostrar_informacoes()
 
     def pesquisar_livro(self,titulo):
@@ -125,7 +119,7 @@ class Biblioteca:
                 encontrados.append(livro)
         return encontrados 
 
-    def remover_livro (self):
+    def remover_livro (self,titulo):
         livro= self.buscar_livro(titulo)
         if livro is None:
             print("Livro não encontrado.")
@@ -136,7 +130,7 @@ class Biblioteca:
         livro.disponivel=False
 
         print("Emprestimo realizado com sucesso")
-        leitor.historico.append({"Título": livro.titulo, "autor": livro.autor, "status": "Emprestado" })
+        Leitor.historico.append({"Título": livro.titulo, "autor": livro.autor, "status": "Emprestado" })
 
     def devolver_livro(self,titulo):
         livro= self.buscar_livro(titulo)
