@@ -2,7 +2,7 @@ class Biblioteca:
     def __init__(self):
         self.leitores= []
         self.livros=[]
-        
+
     def cadastrar_leitor(self,leitor):
         self.leitores.append(leitor)
 
@@ -19,4 +19,19 @@ class Biblioteca:
             if livro.titulo.lower()== titulo.lower():
                 return livro
             return None
-            
+
+    def consultar_acervo (self):
+        print("          Acervo   ")       
+
+        if len(self.livros)==0:
+            print(" Nenhum livro cadastrado. ")
+            return
+        if livro in self.livros:
+            livro.mostrar_informacoes()
+
+    def pesquisar_livro(self,titulo):
+        encontrados=[]
+        for livro in self.livros:
+            if titulo.lower()in livro.titulo.lower():
+                encontrados.append(livro)
+        return encontrados 
