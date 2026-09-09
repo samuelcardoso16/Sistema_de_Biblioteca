@@ -1,12 +1,19 @@
-class Livro:
-    def __init__(self,titulo,autor,ano_publicacao,numero_paginas,editora,genero):
-        self.titulo = titulo
-        self.autor = autor
-        self.ano_publicacao = ano_publicacao
-        self.numero_paginas = numero_paginas
-        self.editora = editora
-        self.genero = genero
-        self.disponivel = True
+class Administrador(Pessoa):
+    def __init__(
+        self,
+        nome,
+        idade,
+        telefone,
+        email,
+        matricula
+    ):
+        super().__init__(
+            nome,
+            idade,
+            telefone,
+            email
+        )
+        self.matricula = matricula
 
     def mostrar_informacoes(self):
         print("\n------------------------------")
@@ -65,3 +72,5 @@ class Leitor(Pessoa):
             print(f" Status: {livro['status']}")
 
 Leitor1 = ("Manuel Silva de Oliveira", "48", "55 77 99106-9024", "manuelsilvadeoliveira169@gmail.com")
+# Cadastro do administrador
+administrador = Administrador("Alan Silva De Oliveira",30,"(77) 99999-0000","alansilvadeoliveira169@gmail.com","ADM123")
