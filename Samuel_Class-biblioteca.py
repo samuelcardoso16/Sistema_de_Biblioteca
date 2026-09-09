@@ -65,6 +65,7 @@ class Biblioteca:
                     registro["status"] = "Devolvido"
         print("Livro devolvido com sucesso!")
 
+<<<<<<< Updated upstream
         def alterar_livro (self,titulo):
             livro=self.buscar_livro(titulo)
             if livro is None:
@@ -117,3 +118,20 @@ class Biblioteca:
             print(f"Total de leitores: {total_leitores}")
 
         
+=======
+    def alterar_livro(self,titulo):
+        livro= self.buscar_livro(titulo)
+        if livro is None:
+            print("Livro não encontrado")
+            return
+        if not livro.dsponivel:
+            print("Não é possivel alterar um livro emprestado")
+            return 
+
+        print("ALTERAÇÃO DO LIVRO")
+        print("Deixe vazio para manter a informção atual")
+
+        novo_titulo= input(f"Informe o novo titulo: {livro.titulo}") 
+        novo_autor= input(f"Informe o novo autor: {livro.autor}")
+        novo_ano= input(f"Informe o novo ano: {livro.ano_publicacao}")           
+>>>>>>> Stashed changes
