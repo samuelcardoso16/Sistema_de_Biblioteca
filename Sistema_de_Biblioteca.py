@@ -38,3 +38,4 @@ class Leitor(Pessoa):
 Leitor1 = ("Manuel Silva de Oliveira", "48", "55 77 99106-9024", "manuelsilvadeoliveira169@gmail.com")
 # Cadastro do administrador
 
+
