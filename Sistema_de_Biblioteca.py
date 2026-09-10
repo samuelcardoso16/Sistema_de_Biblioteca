@@ -207,6 +207,55 @@ class Biblioteca:
             print(f"Livros emprestados: {livros_emprestados}")
             print(f"Total de leitores: {total_leitores}")
 
+def  ler_inteiro(mensagem):
+    while True:
+        try:
+            return int(input(mensagem))
+        except ValueError:
+            print("Digite apenas numeros.")
+
+def cadastrar_novo_leitor(Biblioteca):
+    print("\n================================")
+    print("        CADASTRO DE LEITOR        ") 
+    print("==================================")
+
+    nome=input("Nome: ")
+
+    if biblioteca.buscar_leitor(nome) is not None:
+        print("\n Esse leitor já está cadastrado. ")
+        return
+
+    idade= ler_inteiro("idade: ")
+    telefone=  input("Telefone: ")
+    email= input("E-mail: ")
+
+    leitor=Leitor(nome,idade,telefone,email)
+
+    biblioteca.cadastrar_leitor(leitor)
+    print("\nLeitor cadastrado com sucesso!")
+
+
+def cadastrar_novo_livro(biblioteca):
+    print("\n================================")
+    print("        CADASTRO DE LIVRO         ") 
+    print("==================================")
+
+    titulo=input("Título: ")
+    if biblioteca.buscar_livro(titulo) is not None:
+        print("\nEsse livro já está cadastrado.")
+        return
+
+    autor=input("Autor; ")
+    ano=ler_inteiro("Ano de pulblicação: ")
+    paginas= ler_inteiro("Numero de páginas: ")
+    editora=input("Editora: ")
+    genero=input("Genero literário: ")
+
+    livro=Livro(titulo, autor, ano, paginas, editora, genero)
+
+    biblioteca.cadastrar_livro(livro)
+    print("\nLivro cadastrado com sucesso!")
+
 
 Leitor1 = Leitor("Manuel Silva de Oliveira", "48", "55 77 99106-9024", "manuelsilvadeoliveira169@gmail.com")
 administrador = Administrador("Alan Silva De Oliveira",30,"(77) 99999-0000","alansilvadeoliveira169@gmail.com","ADM123")
