@@ -257,14 +257,6 @@ def cadastrar_novo_livro(biblioteca):
     print("\nLivro cadastrado com sucesso!")
 
 
-Leitor1 = Leitor("Manuel Silva de Oliveira", "48", "55 77 99106-9024", "manuelsilvadeoliveira169@gmail.com")
-administrador = Administrador("Alan Silva De Oliveira",30,"(77) 99999-0000","alansilvadeoliveira169@gmail.com","ADM123")
-
-livro1 = ("Star Wars: A Vingança dos Sith (Episódio III) – Edição de luxo", "MATTHEW STOVER", 2025, 400, "Universo Geek","Ficção científica")
-livro2 = ("Star Wars: The Mandalorian – Como deve ser", "Christopher Nicholas",2026 ,32,"Uni Jr","Literatura infantil e Infantojuvenil")
-livro3 = ("A Metamorfose","Franz Kafka",1915,96,"Editora Principis","Novela, Ficção fantástica e Ficção do absurdo")
-livro4 = ("O Senhor dos Anéis: A Sociedade do Anel","J. R. R. Tolkien",1954 ,434,"HarperCollins Brasil,""Fantasia épica e Romance de Aventura")
-
 def menu_cadastro(biblioteca):
     while True:
         print("\n================================")
@@ -474,74 +466,20 @@ def menu_principal(biblioteca):
         input("\nPressione ENTER para continuar...")
 
 
-# ==========================================
-# INÍCIO DO PROGRAMA
-# ==========================================
+Leitor1 = Leitor("Manuel Silva de Oliveira", "48", "55 77 99106-9024", "manuelsilvadeoliveira169@gmail.com")
+administrador = Administrador("Alan Silva De Oliveira",30,"(77) 99999-0000","alansilvadeoliveira169@gmail.com","ADM123")
 
-biblioteca = Biblioteca()
+livro1 = ("Star Wars: A Vingança dos Sith (Episódio III) – Edição de luxo", "MATTHEW STOVER", 2025, 400, "Universo Geek","Ficção científica")
+livro2 = ("Star Wars: The Mandalorian – Como deve ser", "Christopher Nicholas",2026 ,32,"Uni Jr","Literatura infantil e Infantojuvenil")
+livro3 = ("A Metamorfose","Franz Kafka",1915,96,"Editora Principis","Novela, Ficção fantástica e Ficção do absurdo")
+livro4 = ("O Senhor dos Anéis: A Sociedade do Anel","J. R. R. Tolkien",1954 ,434,"HarperCollins Brasil,""Fantasia épica e Romance de Aventura")
 
-
-# Cadastro dos leitores iniciais
-leitor1 = Leitor(
-    "Samuel",
-    17,
-    "(77) 99999-1111",
-    "samuel@gmail.com"
-)
-
-leitor2 = Leitor(
-    "Maria",
-    18,
-    "(77) 99999-2222",
-    "maria@gmail.com"
-)
 
 biblioteca.cadastrar_leitor(leitor1)
 biblioteca.cadastrar_leitor(leitor2)
-
-
-# Cadastro dos livros iniciais
-livro1 = Livro(
-    "Orgulho e Preconceito",
-    "Jane Austen",
-    1813,
-    432,
-    "Penguin",
-    "Romance"
-)
-
-livro2 = Livro(
-    "Dom Casmurro",
-    "Machado de Assis",
-    1899,
-    256,
-    "Garnier",
-    "Romance"
-)
-
-livro3 = Livro(
-    "1984",
-    "George Orwell",
-    1949,
-    328,
-    "Companhia das Letras",
-    "Ficção Distópica"
-)
 
 biblioteca.cadastrar_livro(livro1)
 biblioteca.cadastrar_livro(livro2)
 biblioteca.cadastrar_livro(livro3)
 
-
-# Cadastro do administrador
-administrador = Administrador(
-    "Administrador",
-    30,
-    "(77) 99999-0000",
-    "admin@biblioteca.com",
-    "ADM123"
-)
-
-
-# Inicia o sistema
 menu_principal(biblioteca)
