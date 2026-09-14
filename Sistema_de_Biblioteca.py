@@ -11,6 +11,7 @@ class Pessoa:
         print(f"Telefone: {self.telefone}")
         print(f"E-mail: {self.email}")
 
+
 class Leitor(Pessoa):
     def __init__(self, nome, idade, telefone, email):
         super().__init__(nome, idade, telefone, email)
@@ -30,12 +31,12 @@ class Leitor(Pessoa):
 
         for i, livro in enumerate(self.historico, 1):
             print(f"\n{i} - {livro['titulo']}")
-            print(f" Autor: {livro['autor']}")
-            print(f" Status: {livro['status']}")
+            print(f"Autor: {livro['autor']}")
+            print(f"Status: {livro['status']}")
 
 
 class Livro:
-    def __init__(self,titulo,autor,ano_publicacao,numero_paginas,editora,genero):
+    def __init__(self, titulo, autor, ano_publicacao, numero_paginas, editora, genero):
         self.titulo = titulo
         self.autor = autor
         self.ano_publicacao = ano_publicacao
@@ -60,207 +61,256 @@ class Livro:
 
 
 class Administrador(Pessoa):
-    def __init__(self,nome,idade,telefone, email,matricula):
-        super().__init__( nome,idade,telefone, email)
+    def __init__(self, nome, idade, telefone, email, matricula):
+        super().__init__(nome, idade, telefone, email)
         self.matricula = matricula
 
 
-class Biblioteca: 
+class Biblioteca:
     def __init__(self):
-        self.leitores= []
-        self.livros=[]
+        self.leitores = []
+        self.livros = []
 
-    def cadastrar_leitor(self,leitor):
+    def cadastrar_leitor(self, leitor):
         self.leitores.append(leitor)
 
-    def cadastrar_livro(self,livro):
+    def cadastrar_livro(self, livro):
         self.livros.append(livro)
 
-    def buscar_leitor(self,nome):
-        for leitor in self.leitores: 
-            if leitor.nome.lower()== nome.lower():
+    def buscar_leitor(self, nome):
+        for leitor in self.leitores:
+            if leitor.nome.lower() == nome.lower():
                 return leitor
-            
-    def buscar_livro(self,titulo):
-        for livro in self.livros:
-            if livro.titulo.lower()== titulo.lower():
-                return livro
-            return None
+        return None
 
-    def consultar_acervo (self):
+    def buscar_livro(self, titulo):
+        for livro in self.livros:
+            if livro.titulo.lower() == titulo.lower():
+                return livro
+        return None
+
+    def consultar_acervo(self):
         print("\n================================")
-        print("              Acervo              ")
-        print("==================================")       
+        print("             ACERVO")
+        print("================================")
 
         if len(self.livros) == 0:
-            print(" Nenhum livro cadastrado. ")
+            print("Nenhum livro cadastrado.")
             return
+
         for livro in self.livros:
             livro.mostrar_informacoes()
 
-    def pesquisar_livro(self,titulo):
-        encontrados=[]
-        for livro in self.livros:
-            if titulo.lower()in livro.titulo.lower():
-                encontrados.append(livro)
-        return encontrados 
+    def pesquisar_livro(self, titulo):
+        encontrados = []
 
-    def remover_livro (self,titulo):
-        livro= self.buscar_livro(titulo)
+        for livro in self.livros:
+            if titulo.lower() in livro.titulo.lower():
+                encontrados.append(livro)
+
+        return encontrados
+
+    def remover_livro(self, titulo):
+        livro = self.buscar_livro(titulo)
+
         if livro is None:
             print("Livro não encontrado.")
             return
+
         if not livro.disponivel:
-            print("Não é possivel remover o livro emprestado.")
+            print("Não é possível remover um livro emprestado.")
             return
-        livro.disponivel=False
 
-        print("Emprestimo realizado com sucesso")
+        self.livros.remove(livro)
+        print("Livro removido com sucesso!")
 
-    def emprestar_livro(self,nome_leitor,titulo):
-
-        leitor=self.buscar_leitor(nome_leitor)
+    def emprestar_livro(self, nome_leitor, titulo):
+        leitor = self.buscar_leitor(nome_leitor)
 
         if leitor is None:
-            print("Leitor não encontrado")
+            print("Leitor não encontrado.")
             return
-        livro=self.buscar_livro(titulo)
+
+        livro = self.buscar_livro(titulo)
+
         if livro is None:
-            print("Livro não encontrado")
+            print("Livro não encontrado.")
             return
+
         if not livro.disponivel:
-            print("Esse livro já está emprestado")
+            print("Esse livro já está emprestado.")
             return
 
-        livro.disponivel=False
-        leitor.historico.append({"Titulo": livro.titulo, "Autor": livro.autor, "Status": "Emprestado"})
-        print("\nEmprestima realizado com sucesso!")
+        livro.disponivel = False
 
+        leitor.historico.append({
+            "titulo": livro.titulo,
+            "autor": livro.autor,
+            "status": "Emprestado"
+        })
 
-    def devolver_livro(self,titulo):
-        livro= self.buscar_livro(titulo)
-        if livro is None: 
-            print("Livro não encontrado")
+        print("\nEmpréstimo realizado com sucesso!")
+
+    def devolver_livro(self, titulo):
+        livro = self.buscar_livro(titulo)
+
+        if livro is None:
+            print("Livro não encontrado.")
             return
+
         if livro.disponivel:
-            print("Esse livro já esta disponivel")
+            print("Esse livro já está disponível.")
             return
-        livro.disponivel=True 
+
+        livro.disponivel = True
 
         for leitor in self.leitores:
             for registro in leitor.historico:
-                if (registro["Título"].lower()== livro.titulo.lower()and registro["status"]=="Emprestado"):
+                if (
+                    registro["titulo"].lower() == livro.titulo.lower()
+                    and registro["status"] == "Emprestado"
+                ):
                     registro["status"] = "Devolvido"
+
         print("Livro devolvido com sucesso!")
 
-        def alterar_livro (self,titulo):
-            livro=self.buscar_livro(titulo)
-            if livro is None:
-                print("Livro não encontrado")
-                return
-            if not livro.disponivel:
-                print("Não é possivel alterar um livro emprestado.") 
-                return
+    def alterar_livro(self, titulo):
+        livro = self.buscar_livro(titulo)
 
-            print("\n================================")
-            print("        ALTERAÇÃO DO LIVRO        ") 
-            print("==================================")  
+        if livro is None:
+            print("Livro não encontrado.")
+            return
 
-            print("Deixe vazio para manter a informção atual. ")  
-            novo_titulo= input(f"Informe o novo titulo: {livro.titulo}")
-            novo_autor= input(f"Informe o novo autor: {livro.autor}")
-            novo_ano= input(f"Informe o novo ano de publicação: {livro.ano_publicacao}") 
-            nova_paginas= input(f"Informe o novo numero de páginas: {livro.numero_paginas}") 
-            nova_editora= input(f"Informe uma nova editora: {livro.editora}")
-            novo_genero= input(f"Informe o novo genero literario:  {livro.genero}")
+        if not livro.disponivel:
+            print("Não é possível alterar um livro emprestado.")
+            return
 
-            if novo_titulo != "": 
-                livro.titulo=novo_titulo
-            if novo_autor !=  "":
-                livro.autor= novo_autor
-            if  novo_ano != "":
-                livro.ano_publicacao= int(novo_ano)
-            if nova_paginas != "": 
-                livro.numero_paginas= int(nova_paginas)
-            if nova_editora != "":
-                livro.editora= nova_editora
-            if novo_genero != "":
-                livro.genero=novo_genero
+        print("\n================================")
+        print("        ALTERAÇÃO DO LIVRO")
+        print("================================")
 
-            print("Livro alterado com sucesso! ")
+        print("Deixe vazio para manter a informação atual.")
 
-        def mostrar_dados (self):
-            total_livros = len(self.livros)
-            total_leitores=len(self.leitores)   
-            livros_disponiveis=0
-            livros_emprestados=0
+        novo_titulo = input(f"Novo título [{livro.titulo}]: ")
+        novo_autor = input(f"Novo autor [{livro.autor}]: ")
+        novo_ano = input(f"Novo ano de publicação [{livro.ano_publicacao}]: ")
+        novas_paginas = input(f"Novo número de páginas [{livro.numero_paginas}]: ")
+        nova_editora = input(f"Nova editora [{livro.editora}]: ")
+        novo_genero = input(f"Novo gênero literário [{livro.genero}]: ")
 
-            for livro in self.livros: 
-                if livro.disponivel:
-                    livros_disponiveis +=1
-                else:
-                    livros_emprestados +=1
+        if novo_titulo != "":
+            livro.titulo = novo_titulo
 
-            print("DADOS DA BIBLIOTECA")     
-            print(f"Total de livros: {total_livros}")   
-            print(f"Livros disponiveis: {livros_disponiveis}")
-            print(f"Livros emprestados: {livros_emprestados}")
-            print(f"Total de leitores: {total_leitores}")
+        if novo_autor != "":
+            livro.autor = novo_autor
 
-def  ler_inteiro(mensagem):
+        if novo_ano != "":
+            try:
+                livro.ano_publicacao = int(novo_ano)
+            except ValueError:
+                print("Ano inválido. O ano anterior foi mantido.")
+
+        if novas_paginas != "":
+            try:
+                livro.numero_paginas = int(novas_paginas)
+            except ValueError:
+                print("Número de páginas inválido. O valor anterior foi mantido.")
+
+        if nova_editora != "":
+            livro.editora = nova_editora
+
+        if novo_genero != "":
+            livro.genero = novo_genero
+
+        print("Livro alterado com sucesso!")
+
+    def mostrar_dados(self):
+        total_livros = len(self.livros)
+        total_leitores = len(self.leitores)
+
+        livros_disponiveis = 0
+        livros_emprestados = 0
+
+        for livro in self.livros:
+            if livro.disponivel:
+                livros_disponiveis += 1
+            else:
+                livros_emprestados += 1
+
+        print("\n================================")
+        print("       DADOS DA BIBLIOTECA")
+        print("================================")
+        print(f"Total de livros: {total_livros}")
+        print(f"Livros disponíveis: {livros_disponiveis}")
+        print(f"Livros emprestados: {livros_emprestados}")
+        print(f"Total de leitores: {total_leitores}")
+
+
+def ler_inteiro(mensagem):
     while True:
         try:
             return int(input(mensagem))
         except ValueError:
-            print("Digite apenas numeros.")
+            print("Digite apenas números.")
 
-def cadastrar_novo_leitor(Biblioteca):
+
+def cadastrar_novo_leitor(biblioteca):
     print("\n================================")
-    print("        CADASTRO DE LEITOR        ") 
-    print("==================================")
+    print("        CADASTRO DE LEITOR")
+    print("================================")
 
-    nome=input("Nome: ")
+    nome = input("Nome: ")
 
     if biblioteca.buscar_leitor(nome) is not None:
-        print("\n Esse leitor já está cadastrado. ")
+        print("\nEsse leitor já está cadastrado.")
         return
 
-    idade= ler_inteiro("idade: ")
-    telefone=  input("Telefone: ")
-    email= input("E-mail: ")
+    idade = ler_inteiro("Idade: ")
+    telefone = input("Telefone: ")
+    email = input("E-mail: ")
 
-    leitor=Leitor(nome,idade,telefone,email)
+    leitor = Leitor(nome, idade, telefone, email)
 
     biblioteca.cadastrar_leitor(leitor)
+
     print("\nLeitor cadastrado com sucesso!")
 
 
 def cadastrar_novo_livro(biblioteca):
     print("\n================================")
-    print("        CADASTRO DE LIVRO         ") 
-    print("==================================")
+    print("        CADASTRO DE LIVRO")
+    print("================================")
 
-    titulo=input("Título: ")
+    titulo = input("Título: ")
+
     if biblioteca.buscar_livro(titulo) is not None:
         print("\nEsse livro já está cadastrado.")
         return
 
-    autor=input("Autor; ")
-    ano=ler_inteiro("Ano de pulblicação: ")
-    paginas= ler_inteiro("Numero de páginas: ")
-    editora=input("Editora: ")
-    genero=input("Genero literário: ")
+    autor = input("Autor: ")
+    ano = ler_inteiro("Ano de publicação: ")
+    paginas = ler_inteiro("Número de páginas: ")
+    editora = input("Editora: ")
+    genero = input("Gênero literário: ")
 
-    livro=Livro(titulo, autor, ano, paginas, editora, genero)
+    livro = Livro(
+        titulo,
+        autor,
+        ano,
+        paginas,
+        editora,
+        genero
+    )
 
     biblioteca.cadastrar_livro(livro)
+
     print("\nLivro cadastrado com sucesso!")
 
 
 def menu_cadastro(biblioteca):
     while True:
         print("\n================================")
-        print(" CADASTRO")
+        print("             CADASTRO")
         print("================================")
 
         print("1 - Cadastrar leitor")
@@ -284,7 +334,7 @@ def menu_cadastro(biblioteca):
 
 def menu_administrador(biblioteca):
     print("\n================================")
-    print(" ACESSO ADMINISTRADOR")
+    print("       ACESSO ADMINISTRADOR")
     print("================================")
 
     matricula = input("Digite a matrícula: ")
@@ -297,7 +347,7 @@ def menu_administrador(biblioteca):
 
     while True:
         print("\n================================")
-        print(" MENU DO ADMINISTRADOR")
+        print("      MENU DO ADMINISTRADOR")
         print("================================")
 
         print("1 - Cadastrar livro")
@@ -313,15 +363,11 @@ def menu_administrador(biblioteca):
             cadastrar_novo_livro(biblioteca)
 
         elif opcao == "2":
-            titulo = input(
-                "\nDigite o título do livro: "
-            )
+            titulo = input("\nDigite o título do livro: ")
             biblioteca.remover_livro(titulo)
 
         elif opcao == "3":
-            titulo = input(
-                "\nDigite o título do livro: "
-            )
+            titulo = input("\nDigite o título do livro: ")
             biblioteca.alterar_livro(titulo)
 
         elif opcao == "4":
@@ -339,7 +385,7 @@ def menu_administrador(biblioteca):
 
 def consultar_leitor(biblioteca):
     print("\n================================")
-    print(" CONSULTAR LEITOR")
+    print("        CONSULTAR LEITOR")
     print("================================")
 
     nome = input("Digite o nome do leitor: ")
@@ -363,21 +409,18 @@ def consultar_leitor(biblioteca):
 
 def menu_emprestimo(biblioteca):
     print("\n================================")
-    print(" EMPRÉSTIMO DE LIVRO")
+    print("       EMPRÉSTIMO DE LIVRO")
     print("================================")
 
     nome = input("Nome do leitor: ")
     titulo = input("Título do livro: ")
 
-    biblioteca.emprestar_livro(
-        nome,
-        titulo
-    )
+    biblioteca.emprestar_livro(nome, titulo)
 
 
 def menu_devolucao(biblioteca):
     print("\n================================")
-    print(" DEVOLUÇÃO DE LIVRO")
+    print("        DEVOLUÇÃO DE LIVRO")
     print("================================")
 
     titulo = input("Título do livro: ")
@@ -387,12 +430,10 @@ def menu_devolucao(biblioteca):
 
 def pesquisar_livro(biblioteca):
     print("\n================================")
-    print(" PESQUISAR LIVRO")
+    print("         PESQUISAR LIVRO")
     print("================================")
 
-    titulo = input(
-        "Digite parte ou o título do livro: "
-    )
+    titulo = input("Digite parte ou o título do livro: ")
 
     resultados = biblioteca.pesquisar_livro(titulo)
 
@@ -400,9 +441,7 @@ def pesquisar_livro(biblioteca):
         print("\nNenhum livro encontrado.")
         return
 
-    print(
-        f"\nForam encontrados {len(resultados)} livro(s):"
-    )
+    print(f"\nForam encontrados {len(resultados)} livro(s):")
 
     for livro in resultados:
         livro.mostrar_informacoes()
@@ -412,7 +451,7 @@ def menu_principal(biblioteca):
     while True:
         print("\n")
         print("============================================")
-        print(" SISTEMA DE BIBLIOTECA")
+        print("          SISTEMA DE BIBLIOTECA")
         print("============================================")
 
         print("Bem-vindo ao Sistema de Biblioteca!")
@@ -466,14 +505,65 @@ def menu_principal(biblioteca):
         input("\nPressione ENTER para continuar...")
 
 
-Leitor1 = Leitor("Manuel Silva de Oliveira", "48", "55 77 99106-9024", "manuelsilvadeoliveira169@gmail.com")
-administrador = Administrador("Alan Silva De Oliveira",30,"(77) 99999-0000","alansilvadeoliveira169@gmail.com","ADM123")
+biblioteca = Biblioteca()
 
-livro1 = ("Star Wars: A Vingança dos Sith (Episódio III) – Edição de luxo", "MATTHEW STOVER", 2025, 400, "Universo Geek","Ficção científica")
-livro2 = ("Star Wars: The Mandalorian – Como deve ser", "Christopher Nicholas",2026 ,32,"Uni Jr","Literatura infantil e Infantojuvenil")
-livro3 = ("A Metamorfose","Franz Kafka",1915,96,"Editora Principis","Novela, Ficção fantástica e Ficção do absurdo")
-livro4 = ("O Senhor dos Anéis: A Sociedade do Anel","J. R. R. Tolkien",1954 ,434,"HarperCollins Brasil,""Fantasia épica e Romance de Aventura")
+leitor1 = Leitor(
+    "Manuel Silva de Oliveira",
+    48,
+    "55 77 99106-9024",
+    "manuelsilvadeoliveira169@gmail.com"
+)
 
+leitor2 = Leitor(
+    "Maria Silva de Oliveira",
+    35,
+    "55 77 99999-1111",
+    "maria@email.com"
+)
+
+administrador = Administrador(
+    "Alan Silva De Oliveira",
+    30,
+    "(77) 99999-0000",
+    "alansilvadeoliveira169@gmail.com",
+    "ADM123"
+)
+
+livro1 = Livro(
+    "Star Wars: A Vingança dos Sith (Episódio III) – Edição de luxo",
+    "MATTHEW STOVER",
+    2025,
+    400,
+    "Universo Geek",
+    "Ficção científica"
+)
+
+livro2 = Livro(
+    "Star Wars: The Mandalorian – Como deve ser",
+    "Christopher Nicholas",
+    2026,
+    32,
+    "Uni Jr",
+    "Literatura infantil e Infantojuvenil"
+)
+
+livro3 = Livro(
+    "A Metamorfose",
+    "Franz Kafka",
+    1915,
+    96,
+    "Editora Principis",
+    "Novela, Ficção fantástica e Ficção do absurdo"
+)
+
+livro4 = Livro(
+    "O Senhor dos Anéis: A Sociedade do Anel",
+    "J. R. R. Tolkien",
+    1954,
+    434,
+    "HarperCollins Brasil",
+    "Fantasia épica e Romance de Aventura"
+)
 
 biblioteca.cadastrar_leitor(leitor1)
 biblioteca.cadastrar_leitor(leitor2)
@@ -481,5 +571,6 @@ biblioteca.cadastrar_leitor(leitor2)
 biblioteca.cadastrar_livro(livro1)
 biblioteca.cadastrar_livro(livro2)
 biblioteca.cadastrar_livro(livro3)
+biblioteca.cadastrar_livro(livro4)
 
 menu_principal(biblioteca)
