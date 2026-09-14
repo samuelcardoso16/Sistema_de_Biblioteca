@@ -59,11 +59,17 @@ class Livro:
         else:
             print("Status: Emprestado")
 
-
 class Administrador(Pessoa):
     def __init__(self, nome, idade, telefone, email, matricula):
         super().__init__(nome, idade, telefone, email)
-        self.matricula = matricula
+        self.__matricula = matricula
+
+    @property
+    def matricula(self):
+        return self.__matricula
+
+    def verificar_matricula(self, matricula):
+        return self.__matricula == matricula
 
 
 class Biblioteca:
@@ -293,14 +299,7 @@ def cadastrar_novo_livro(biblioteca):
     editora = input("Editora: ")
     genero = input("Gênero literário: ")
 
-    livro = Livro(
-        titulo,
-        autor,
-        ano,
-        paginas,
-        editora,
-        genero
-    )
+    livro = Livro(titulo, autor,paginas, editora,genero)
 
     biblioteca.cadastrar_livro(livro)
 
@@ -453,11 +452,7 @@ def menu_principal(biblioteca):
         print("============================================")
         print("          SISTEMA DE BIBLIOTECA")
         print("============================================")
-
-        print("Bem-vindo ao Sistema de Biblioteca!")
-
         print("\n----------- MENU PRINCIPAL -----------")
-
         print("1 - Consultar dados da biblioteca")
         print("2 - Consultar acervo")
         print("3 - Realizar cadastro")
@@ -507,63 +502,15 @@ def menu_principal(biblioteca):
 
 biblioteca = Biblioteca()
 
-leitor1 = Leitor(
-    "Manuel Silva de Oliveira",
-    48,
-    "55 77 99106-9024",
-    "manuelsilvadeoliveira169@gmail.com"
-)
+leitor1 = Leitor("Manuel Silva de Oliveira", 48, "55 77 99106-9024", "manuelsilvadeoliveira169@gmail.com")
+leitor2 = Leitor("Maria Silva de Oliveira",35, "55 77 99999-1111","maria@email.com")
 
-leitor2 = Leitor(
-    "Maria Silva de Oliveira",
-    35,
-    "55 77 99999-1111",
-    "maria@email.com"
-)
+administrador = Administrador("Alan Silva De Oliveira",30,"(77) 99999-0000","alansilvadeoliveira169@gmail.com","ADM123")
 
-administrador = Administrador(
-    "Alan Silva De Oliveira",
-    30,
-    "(77) 99999-0000",
-    "alansilvadeoliveira169@gmail.com",
-    "ADM123"
-)
-
-livro1 = Livro(
-    "Star Wars: A Vingança dos Sith (Episódio III) – Edição de luxo",
-    "MATTHEW STOVER",
-    2025,
-    400,
-    "Universo Geek",
-    "Ficção científica"
-)
-
-livro2 = Livro(
-    "Star Wars: The Mandalorian – Como deve ser",
-    "Christopher Nicholas",
-    2026,
-    32,
-    "Uni Jr",
-    "Literatura infantil e Infantojuvenil"
-)
-
-livro3 = Livro(
-    "A Metamorfose",
-    "Franz Kafka",
-    1915,
-    96,
-    "Editora Principis",
-    "Novela, Ficção fantástica e Ficção do absurdo"
-)
-
-livro4 = Livro(
-    "O Senhor dos Anéis: A Sociedade do Anel",
-    "J. R. R. Tolkien",
-    1954,
-    434,
-    "HarperCollins Brasil",
-    "Fantasia épica e Romance de Aventura"
-)
+livro1 = Livro("Star Wars: A Vingança dos Sith (Episódio III) – Edição de luxo", "MATTHEW STOVER",2025, 400,"Universo Geek","Ficção científica")
+livro2 = Livro( "Star Wars: The Mandalorian – Como deve ser","Christopher Nicholas",2026,32, "Uni Jr", "Literatura infantil e Infantojuvenil")
+livro3 = Livro("A Metamorfose","Franz Kafka", 1915,96,"Editora Principis","Novela, Ficção fantástica e Ficção do absurdo")
+livro4 = Livro("O Senhor dos Anéis: A Sociedade do Anel", "J. R. R. Tolkien",1954,434, "Fantasia épica e Romance de Aventura")
 
 biblioteca.cadastrar_leitor(leitor1)
 biblioteca.cadastrar_leitor(leitor2)
